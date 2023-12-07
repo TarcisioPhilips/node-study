@@ -2,7 +2,12 @@ import http from 'node:http'
 import { json } from './middlewares/json.js'
 import { routes } from './routes.js'
 
+// query parameters: URL Stateful -> Filtros, paginação, n obrigatórios
+// route parameters: Identificação de Recurso
+// request body: Envio de informações de um formulário
 
+// http://localhost:3333/users?userId=1&name=Tar
+// http://localhost:3333/users/1
 
 const server = http.createServer( async(req, res) => {
   const {method, url}  = req
@@ -12,7 +17,7 @@ const server = http.createServer( async(req, res) => {
   const route = routes.find(route => {
     return route.method === method && route.path ===url
   })
-  
+
   if(route){
     return route.handler(req,res)
   }
